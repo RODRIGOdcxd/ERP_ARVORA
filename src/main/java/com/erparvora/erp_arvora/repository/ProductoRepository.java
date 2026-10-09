@@ -1,9 +1,15 @@
 package com.erparvora.erp_arvora.repository;
 
-import com.erparvora.erp_arvora.model.Producto;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-// Capa que accede a la base de datos para la entidad Producto
-public interface ProductoRepository 
-        extends JpaRepository<Producto, Long> {
+import com.erparvora.erp_arvora.model.Articulo;
+import com.erparvora.erp_arvora.model.TipoArticulo;
+
+public interface ProductoRepository extends JpaRepository<Articulo, Long> {
+
+    @EntityGraph(attributePaths = {"categoria", "unidadMedida"})
+    List<Articulo> findByTipoOrderByNombreAsc(TipoArticulo tipo);
 }

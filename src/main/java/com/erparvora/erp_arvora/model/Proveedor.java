@@ -1,5 +1,8 @@
 package com.erparvora.erp_arvora.model;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,37 +11,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "proveedores")
-public class Proveedor {
+@Table(name = "proveedor")
+public class Proveedor extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "codigo", nullable = false, unique = true)
-    private String codigo;
-
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "ruc", unique = true)
+    @Column(length = 11)
     private String ruc;
 
-    @Column(name = "razon_social")
+    @Column(name = "razon_social", nullable = false, length = 200)
     private String razonSocial;
 
-    @Column(name = "nombre_contacto")
-    private String nombreContacto;
+    @Column(name = "nombre_comercial", length = 200)
+    private String nombreComercial;
 
+    @Column(length = 120)
+    private String contacto;
+
+    @Column(length = 30)
     private String telefono;
+
+    @Column(length = 150)
     private String email;
-    @Column(name = "direccion", columnDefinition = "TEXT")
+
+    @Column(length = 300)
     private String direccion;
-    private String ciudad;
-    private String pais;
-    private String categoria;
-    private String estado;
-    private String observacion;
+
+    @Column(length = 80)
+    private String rubro;
+
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR)
+    @Column(name = "notas")
+    private String notas;
+
+    @Column(nullable = false)
+    private boolean activo = true;
 
     public Proveedor() {
     }
@@ -49,22 +58,6 @@ public class Proveedor {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getRuc() {
@@ -83,12 +76,20 @@ public class Proveedor {
         this.razonSocial = razonSocial;
     }
 
-    public String getNombreContacto() {
-        return nombreContacto;
+    public String getNombreComercial() {
+        return nombreComercial;
     }
 
-    public void setNombreContacto(String nombreContacto) {
-        this.nombreContacto = nombreContacto;
+    public void setNombreComercial(String nombreComercial) {
+        this.nombreComercial = nombreComercial;
+    }
+
+    public String getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
     }
 
     public String getTelefono() {
@@ -115,43 +116,27 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getRubro() {
+        return rubro;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setRubro(String rubro) {
+        this.rubro = rubro;
     }
 
-    public String getPais() {
-        return pais;
+    public String getNotas() {
+        return notas;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setNotas(String notas) {
+        this.notas = notas;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

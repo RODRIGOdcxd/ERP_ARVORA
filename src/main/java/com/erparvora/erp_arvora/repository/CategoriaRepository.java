@@ -1,7 +1,14 @@
 package com.erparvora.erp_arvora.repository;
 
-import com.erparvora.erp_arvora.model.Categoria;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.erparvora.erp_arvora.model.Categoria;
+
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+
+    @EntityGraph(attributePaths = "padre")
+    List<Categoria> findAllByOrderByNombreAsc();
 }

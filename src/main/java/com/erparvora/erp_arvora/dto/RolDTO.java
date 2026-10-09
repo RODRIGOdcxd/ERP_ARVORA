@@ -1,30 +1,10 @@
 package com.erparvora.erp_arvora.dto;
 
-public class RolDTO {
-    private String nombre;
-    private String descripcion;
+import com.erparvora.erp_arvora.model.Rol;
 
-    public RolDTO() {
-    }
+public record RolDTO(Long id, String codigo, String nombre, Boolean activo) {
 
-    public RolDTO(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public static RolDTO from(Rol rol) {
+        return new RolDTO(rol.getId(), rol.getCodigo(), rol.getNombre(), rol.isActivo());
     }
 }

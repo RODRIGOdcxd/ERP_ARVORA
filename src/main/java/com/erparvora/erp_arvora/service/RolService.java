@@ -1,11 +1,13 @@
 package com.erparvora.erp_arvora.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.erparvora.erp_arvora.dto.RolDTO;
 import com.erparvora.erp_arvora.model.Rol;
 import com.erparvora.erp_arvora.repository.RolRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RolService {
@@ -16,20 +18,27 @@ public class RolService {
         this.repository = repository;
     }
 
-    public List<Rol> listarRoles() {
-        return repository.findAll();
+    @Transactional(readOnly = true)
+    public List<RolDTO> listarRoles() {
+        return repository.findAll().stream()
+                .map(RolDTO::from)
+                .toList();
     }
 
-    public Rol guardarRol(RolDTO rolDTO) {
-        if (rolDTO.getNombre() == null || rolDTO.getNombre().trim().isEmpty()) {
+    @Transactional
+    public RolDTO guardarRol(RolDTO rolDTO) {
+        if (rolDTO.codigo() == null || rolDTO.codigo().trim().isEmpty()) {
+            throw new IllegalArgumentException("El código del rol es requerido");
+        }
+        if (rolDTO.nombre() == null || rolDTO.nombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del rol es requerido");
         }
 
         Rol rol = new Rol();
-        rol.setNombre(rolDTO.getNombre().trim());
-        rol.setDescripcion(rolDTO.getDescripcion());
-        rol.setActivo(true);
+        rol.setCodigo(rolDTO.codigo().trim());
+        rol.setNombre(rolDTO.nombre().trim());
+        rol.setActivo(rolDTO.activo() == null || rolDTO.activo());
 
-        return repository.save(rol);
+        return RolDTO.from(repository.save(rol));
     }
 }
