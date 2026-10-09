@@ -1,0 +1,23 @@
+# Copiar las variables al entorno (o a un .env local, que no se versiona).
+# No poner claves en este archivo ni en src/main/resources/application.properties.
+#
+#   createdb erp_arvora
+#   createuser erp_arvora --pwprompt
+#   psql -c "GRANT ALL PRIVILEGES ON DATABASE erp_arvora TO erp_arvora"
+#   export DB_URL=jdbc:postgresql://localhost:5432/erp_arvora
+#   export DB_USER=erp_arvora
+#   export DB_PASSWORD=la_clave
+#   ./mvnw spring-boot:run
+#
+# Flyway crea el esquema V1 sobre una base vacía. No reutilizar el esquema
+# viejo generado por Hibernate. La lista de proveedores que ya existía hay
+# que exportarla a CSV y recargarla en una migración V2 futura; V1 no inserta
+# proveedores. El precio de lista incluye IGV (18%).
+
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.open-in-view=false
+spring.jpa.properties.hibernate.jdbc.time_zone=UTC
+spring.flyway.locations=classpath:db/migration

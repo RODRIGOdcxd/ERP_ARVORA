@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erparvora.erp_arvora.dto.CategoriaDTO;
-import com.erparvora.erp_arvora.model.Categoria;
 import com.erparvora.erp_arvora.service.CategoriaService;
 
 @RestController
@@ -26,13 +25,12 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> listarCategorias() {
+    public ResponseEntity<List<CategoriaDTO>> listarCategorias() {
         return ResponseEntity.ok(categoriaService.listarCategorias());
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> crearCategoria(@RequestBody CategoriaDTO categoriaDTO) {
-        Categoria categoriaGuardada = categoriaService.guardarCategoria(categoriaDTO);
-        return ResponseEntity.ok(categoriaGuardada);
+    public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+        return ResponseEntity.ok(categoriaService.guardarCategoria(categoriaDTO));
     }
 }

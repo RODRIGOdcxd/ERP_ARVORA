@@ -2,33 +2,29 @@ package com.erparvora.erp_arvora.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "almacen")
+public class Almacen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 80)
-    private String nombre;
+    @Column(nullable = false, unique = true, length = 20)
+    private String codigo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "padre_id")
-    private Categoria padre;
+    @Column(nullable = false, length = 100)
+    private String nombre;
 
     @Column(nullable = false)
     private boolean activo = true;
 
-    public Categoria() {
+    public Almacen() {
     }
 
     public Long getId() {
@@ -39,20 +35,20 @@ public class Categoria {
         this.id = id;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Categoria getPadre() {
-        return padre;
-    }
-
-    public void setPadre(Categoria padre) {
-        this.padre = padre;
     }
 
     public boolean isActivo() {

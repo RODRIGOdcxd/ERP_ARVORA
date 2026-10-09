@@ -1,49 +1,35 @@
 package com.erparvora.erp_arvora.dto;
 
-public class ProductoDTO {
-    private String nombre;
-    private String descripcion;
-    private Double precio;
-    private Long categoriaId;
+import java.math.BigDecimal;
 
-    public ProductoDTO() {}
+import com.erparvora.erp_arvora.model.Articulo;
+import com.erparvora.erp_arvora.model.Categoria;
 
-    public ProductoDTO(String nombre, String descripcion, Double precio, Long categoriaId) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.categoriaId = categoriaId;
-    }
+/** Precio de lista de un artículo tipo PRODUCTO. precioVenta incluye IGV (18%). */
+public record ProductoDTO(
+        Long id,
+        String codigo,
+        String nombre,
+        String descripcion,
+        String tipo,
+        Long categoriaId,
+        String categoriaNombre,
+        String unidadMedidaCodigo,
+        BigDecimal precioVenta,
+        boolean preciosIncluyenIgv) {
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
+    public static ProductoDTO from(Articulo articulo) {
+        Categoria categoria = articulo.getCategoria();
+        return new ProductoDTO(
+                articulo.getId(),
+                articulo.getCodigo(),
+                articulo.getNombre(),
+                articulo.getDescripcion(),
+                articulo.getTipo().name(),
+                categoria == null ? null : categoria.getId(),
+                categoria == null ? null : categoria.getNombre(),
+                articulo.getUnidadMedida().getCodigo(),
+                articulo.getPrecioVenta(),
+                true);
     }
 }

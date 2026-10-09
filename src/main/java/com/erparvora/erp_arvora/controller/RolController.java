@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erparvora.erp_arvora.dto.RolDTO;
-import com.erparvora.erp_arvora.model.Rol;
 import com.erparvora.erp_arvora.service.RolService;
 
 @RestController
@@ -26,13 +25,12 @@ public class RolController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Rol>> listarRoles() {
+    public ResponseEntity<List<RolDTO>> listarRoles() {
         return ResponseEntity.ok(rolService.listarRoles());
     }
 
     @PostMapping
-    public ResponseEntity<Rol> crearRol(@RequestBody RolDTO rolDTO) {
-        Rol rolGuardado = rolService.guardarRol(rolDTO);
-        return ResponseEntity.ok(rolGuardado);
+    public ResponseEntity<RolDTO> crearRol(@RequestBody RolDTO rolDTO) {
+        return ResponseEntity.ok(rolService.guardarRol(rolDTO));
     }
 }

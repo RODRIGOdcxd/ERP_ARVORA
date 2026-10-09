@@ -2,34 +2,35 @@ package com.erparvora.erp_arvora.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "unidades_medida")
+@Table(name = "unidad_medida")
 public class UnidadMedida {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 10)
+    private String codigo;
+
+    @Column(nullable = false, length = 50)
     private String nombre;
 
-    @Column(nullable = false, unique = true)
-    private String abreviatura;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 12)
+    private Magnitud magnitud;
 
     @Column(nullable = false)
-    private Boolean activo = true;
+    private short decimales;
 
     public UnidadMedida() {
-    }
-
-    public UnidadMedida(String nombre, String abreviatura) {
-        this.nombre = nombre;
-        this.abreviatura = abreviatura;
     }
 
     public Long getId() {
@@ -40,6 +41,14 @@ public class UnidadMedida {
         this.id = id;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -48,19 +57,19 @@ public class UnidadMedida {
         this.nombre = nombre;
     }
 
-    public String getAbreviatura() {
-        return abreviatura;
+    public Magnitud getMagnitud() {
+        return magnitud;
     }
 
-    public void setAbreviatura(String abreviatura) {
-        this.abreviatura = abreviatura;
+    public void setMagnitud(Magnitud magnitud) {
+        this.magnitud = magnitud;
     }
 
-    public Boolean getActivo() {
-        return activo;
+    public short getDecimales() {
+        return decimales;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setDecimales(short decimales) {
+        this.decimales = decimales;
     }
 }
